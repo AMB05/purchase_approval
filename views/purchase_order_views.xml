@@ -5,11 +5,17 @@
         <field name="inherit_id" ref="purchase.purchase_order_form"/>
         <field name="arch" type="xml">
 
-            <!-- Menambahkan tombol "Approve" untuk menyetujui pesanan -->
+            <!-- Add Button "Approve" to Approval -->
             <xpath expr="//header" position="inside">
                 <button name="action_approve" type="object" 
                     string="Approve" class="btn-success"
-                    invisible="state != 'waiting_approval'"/>
+                    invisible="state != 'waiting_approval' or 'purchase.group_purchase_manager'"/> <!--for waiting (manager) -->
+                    <!-- invisible="state != 'waiting_approval'"/> --> <!--for waiting (user) -->
+            </xpath>
+
+            <!-- Button Confirmation -->
+            <xpath expr="//header/button[@name='button_confirm']" position="attributes">
+                <attribute name="invisible">state != 'approved'</attribute>
             </xpath>
         </field>
     </record>
