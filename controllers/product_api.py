@@ -1,15 +1,28 @@
-import json
 from odoo import http
 from odoo.http import request
+import json
 
-class ProductAPI(http.Controller):
+class ProductAPIController(http.Controller):
 
     @http.route('/api/products', type='http', auth='public', methods=['GET'], csrf=False)
-    def get_products(self, category=None, **kwargs):
-        query = "SELECT id, name, list_price FROM product_product WHERE active=True"
-        if category:
-            query += " AND categ_id = %s" % category
+    def get_products(self, category_id=None, **kwargs):
+        """API untuk mengambil produk dengan filter kategori."""
+        query = """
+            SELECT p.id, pt.name, pt.list_price, c.name as category
+            FROM product_product p
+            JOIN product_template pt ON p.product_tmpl_id = pt.id
+            LEFT JOIN product_category c ON pt.categ_id = c.id
+        """
+        params = []
 
-        request.env.cr.execute(query)
+        if category_id:
+            query += " WHERE pt.categ_id = %s"
+            params.append(int(category_id))
+
+        request.env.cr.execute(query, tuple(params))
         products = request.env.cr.dictfetchall()
-        return request.make_response(json.dumps(products), headers=[('Content-Type', 'application/json')])
+
+        return request.make_response(
+            json.dumps({"status": "success", "products": products}, indent=4),
+            headers=[('Content-Type', 'application/json')]
+        )

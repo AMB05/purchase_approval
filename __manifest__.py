@@ -14,6 +14,7 @@
         "views/purchase_order_views.xml",
         
     ],
+    'external_dependencies': {'python': []},
     'installable': True,
     'application': True,
 }
