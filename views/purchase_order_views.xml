@@ -9,14 +9,18 @@
             <xpath expr="//header" position="inside">
                 <button name="action_approve" type="object" 
                     string="Approve" class="btn-success"
-                    invisible="state != 'waiting_approval' or 'purchase.group_purchase_manager'"/> <!--for waiting (manager) -->
-                    <!-- invisible="state != 'waiting_approval'"/> --> <!--for waiting (user) -->
+                    groups="purchase.group_purchase_manager" 
+                    invisible="state != 'waiting_approval'"/>
             </xpath>
 
-            <!-- Button Confirmation -->
-            <xpath expr="//header/button[@name='button_confirm']" position="attributes">
-                <attribute name="invisible">state != 'approved'</attribute>
+            <!-- Button Cancel Approval-->
+            <xpath expr="//header" position="inside">
+                <button name="button_cancel" type="object" 
+                    string="Cancel Approped" 
+                    groups="purchase.group_purchase_manager"
+                    invisible="state != 'waiting_approval'"/>
             </xpath>
+            
         </field>
     </record>
 </odoo>
