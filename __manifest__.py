@@ -3,7 +3,7 @@
     'name': "purchase_approval",
     'summary': "Add approval workflow for purchase orders",
     'description': """
-                    Add approval workflow for purchase orders, product API & reports
+                    Add approval workflow for purchase orders, product API
                     """,
     'author': "AMB",
     'category': 'Purchase',
