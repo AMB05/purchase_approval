@@ -6,7 +6,7 @@ class ProductAPIController(http.Controller):
 
     @http.route('/api/products', type='http', auth='public', methods=['GET'], csrf=False)
     def get_products(self, category_id=None, category_name=None, **kwargs):
-        #GET API Product Filter Category_ID & Category_Nama
+        #GET API Product Filter Category_ID & Category_Name
         query = """
             SELECT p.id, pt.name, pt.list_price, c.name as category
             FROM product_product p
